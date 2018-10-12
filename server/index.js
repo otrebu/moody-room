@@ -8,6 +8,12 @@ const app = new Koa();
 app.use(koaBody({ multipart: true, jsonLimit: '30mb', formLimit: '30mb' }));
 
 app.use(async (ctx, next) => {
+    console.log('URL: ', ctx.url);
+
+    return await next();
+});
+
+app.use(async (ctx, next) => {
     const { headers, files } = ctx.request;
 
     console.log(ctx.url);
