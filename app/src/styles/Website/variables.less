@@ -1,0 +1,59 @@
+//Colours
+@color-1: #161920;
+@color-2: #545b65;
+@color-3: #889196;
+@color-4: #d5dbdb;
+@color-5: #fafafa;
+@color-6: #ffffff;
+@color-text: @color-6;
+@color-link: @color-6;
+@color-border: @color-3;
+@color-body-background: @color-5;
+//HAPPY - yellow
+@gradient-happy: linear-gradient(-270deg, #00c3ff 0%, #ffff1c 100%);
+//SAD - blue
+@gradient-sad: linear-gradient(-270deg, #141e30 0%, #243b55 100%);
+//ANGRY  - red
+@gradient-angry: linear-gradient(-270deg, #c31432 0%, #240b36 100%);
+//CONFUSED
+@gradient-confused: linear-gradient(-270deg, #134e5e 0%, #71b280 100%);
+//DISGUSTED
+@gradient-disgusted: linear-gradient(-270deg, #1d4350 0%, #a43931 100%);
+//SURPRISED
+@gradient-surprised: linear-gradient( to right, #03001e, #7303c0, #ec38bc, #fdeff9);
+//CALM
+@gradient-calm: linear-gradient(-270deg, #076585 0%, #ffffff 100%);
+//UNKNOWN - black
+@gradient-unknown: linear-gradient(to right, #232526, #414345);
+//Default sizes
+@default-font-size: 16px;
+@default-line-height: 24px;
+@default-padding: 20px;
+//Sizings
+@h1-font-size: 66px;
+@h2-font-size: 50px;
+@h3-font-size: 38px;
+@h4-font-size: 28px;
+@h5-font-size: 21px;
+@h6-font-size: 12px;
+//General mixins
+.fw {
+  float: left;
+  width: 100%;
+}
+
+.pw {
+  min-width: 320px;
+  .fw;
+}
+
+.fw-relative {
+  .fw;
+  position: relative;
+}
+
+.font(@fs: @default-font-size, @fontw: 400) {
+  font-family: "Assistant", sans-serif;
+  font-size: @fs;
+  font-weight: @fontw;
+}
