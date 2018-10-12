@@ -3,7 +3,6 @@ const util = require('util');
 const FormData = require('form-data');
 const http = require('http');
 const fs = require('fs');
-const FormData = require('form-data');
 
 const execAsync = util.promisify(exec);
 const unlinkAsync = util.promisify(fs.unlink);
@@ -11,18 +10,20 @@ const unlinkAsync = util.promisify(fs.unlink);
 const main = async () => {
     const pictureName = `${Date.now()}.jpg`;
     const pictureFolderPath = '/home/pi/Pictures';
-    const pictureFullPath = `${path}/${pictureName}`;
+    const pictureFullPath = `${pictureFolderPath}/${pictureName}`;
     const takePictureCommand = `raspistill -o "${pictureFullPath}"`;
 
     try {
         const response = await execAsync(takePictureCommand);
+        console.log(`Taken picture: ${pictureFullPath}`);
 
         const form = new FormData();
         form.append('file', fs.createReadStream(pictureFullPath));
 
         const options = {
             port: 8080,
-            path: '52.56.44.112/picture-receiver',
+            hostname: '52.56.44.112',
+            path: '/picture-receiver',
             method: 'POST',
             headers: form.getHeaders()
         };
@@ -36,8 +37,6 @@ const main = async () => {
             console.error(`problem with request: ${e.message}`);
         });
 
-        form.pipe(request);
-
         request.on('response', response => {
             console.log(response.statusCode);
             if (response.statusCode === 200) {
@@ -45,6 +44,8 @@ const main = async () => {
                 console.log(`${pictureFullPath} was deleted`);
             }
         });
+
+        form.pipe(request);
 
     } catch (error) {
         console.log(error);

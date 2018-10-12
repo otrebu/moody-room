@@ -10,6 +10,8 @@ app.use(koaBody({ multipart: true, jsonLimit: '30mb', formLimit: '30mb' }));
 app.use(async (ctx, next) => {
     const { headers, files } = ctx.request;
 
+    console.log(ctx.url);
+
     if (ctx.method !== 'POST' && ctx.url !== 'picture-receiver')
         return await next();
 
