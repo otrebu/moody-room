@@ -37,7 +37,7 @@ const main = async () => {
             console.error(`problem with request: ${e.message}`);
         });
 
-        request.on('response', response => {
+        request.on('response', async response => {
             console.log(response.statusCode);
             if (response.statusCode === 200) {
                 await unlinkAsync(pictureFullPath);
@@ -46,7 +46,6 @@ const main = async () => {
         });
 
         form.pipe(request);
-
     } catch (error) {
         console.log(error);
     }
