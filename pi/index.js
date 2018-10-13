@@ -21,9 +21,9 @@ const main = async () => {
         form.append('file', fs.createReadStream(pictureFullPath));
 
         const options = {
-            port: 8080,
+            port: 80,
             hostname: '52.56.44.112',
-            path: '/picture-receiver',
+            path: 'pi/picture-receiver',
             method: 'POST',
             headers: form.getHeaders()
         };
@@ -51,4 +51,4 @@ const main = async () => {
     }
 };
 
-main();
+setInterval(main, 5000);

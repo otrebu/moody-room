@@ -1,11 +1,18 @@
 const Koa = require('koa');
 const koaBody = require('koa-body');
-const fs = require('fs');
-const path = require('path');
+const { piApiRouter } = require('./piApiRouter.js');
+const { apiRouter } = require('./apiRouter.js');
+//const Router = require('koa-router');
 
 const app = new Koa();
+//const apiRouter = new Router({ prefix: '/api' });
 
-app.use(koaBody({ multipart: true, jsonLimit: '30mb', formLimit: '30mb' }));
+// apiRouter.get('/current-moods', async (ctx, next) => {
+//     ctx.body = `Hello world! Prefix: ${ctx.route.prefix}`;
+//     return await next();
+// });
+
+console.log(piApiRouter);
 
 app.use(async (ctx, next) => {
     console.log('URL: ', ctx.url);
@@ -13,24 +20,10 @@ app.use(async (ctx, next) => {
     return await next();
 });
 
-app.use(async (ctx, next) => {
-    const { headers, files } = ctx.request;
-
-    console.log(ctx.url);
-
-    if (ctx.method !== 'POST' && ctx.url !== 'picture-receiver')
-        return await next();
-
-    console.log(JSON.stringify(headers));
-    console.log(JSON.stringify(ctx.request));
-
-    const { file } = files;
-    const reader = fs.createReadStream(file.path);
-    const stream = fs.createWriteStream(path.join('./uploads', file.name));
-
-    reader.pipe(stream);
-
-    console.log('uploading %s -> %s', file.name, stream.path);
-});
+app.use(koaBody({ multipart: true, jsonLimit: '30mb', formLimit: '30mb' }))
+    .use(piApiRouter.routes())
+    .use(piApiRouter.allowedMethods())
+    .use(apiRouter.routes())
+    .use(apiRouter.allowedMethods());
 
 app.listen(8080);
