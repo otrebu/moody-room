@@ -1,19 +1,28 @@
-import React from "react";
+import React from 'react';
 
 export const Themes = {
-  navigationOpenClassName: "open",
-  menuOpenClassName: "fa-bars",
-  menuCloseClassName: "fa-times",
-  menuOpen: false,
-  moodHappy: "bg-happy",
-  moodSad: "bg-sad",
-  moodAngry: "bg-angry",
-  moodConfused: "bg-confused",
-  moodDisgusted: "bg-disgusted",
-  moodSurprised: "bg-surprised",
-  moodCalm: "bg-calm",
-  moodUnknown: "bg-unknown",
-  toggleNavigationHandler: () => {}
+    navigation: {
+        isOpen: false,
+        icon: {
+            openedClassName: 'fa-times',
+            closedClassName: 'fa-bars'
+        },
+        container: {
+            openedClassName: 'open',
+            closedClassName: ''
+        }
+    },
+    moods: {
+        happy: 'bg-happy',
+        sad: 'bg-sad',
+        angry: 'bg-angry',
+        confused: 'bg-confused',
+        disgusted: 'bg-disgusted',
+        surprised: 'bg-surprised',
+        calm: 'bg-calm',
+        unknown: 'bg-unknown'
+    },
+    toggleNavigationHandler: () => {}
 };
 
-export const ThemeContext = React.createContext(Themes.moodHappy);
+export const ThemeContext = React.createContext(Themes.moods.happy);

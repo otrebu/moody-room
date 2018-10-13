@@ -20,15 +20,24 @@
 //DISGUSTED
 @gradient-disgusted: linear-gradient(-270deg, #1d4350 0%, #a43931 100%);
 //SURPRISED
-@gradient-surprised: linear-gradient( to right, #03001e, #7303c0, #ec38bc, #fdeff9);
+@gradient-surprised: linear-gradient(
+    to right,
+    #03001e,
+    #7303c0,
+    #ec38bc,
+    #fdeff9
+);
 //CALM
 @gradient-calm: linear-gradient(-270deg, #076585 0%, #ffffff 100%);
 //UNKNOWN - black
 @gradient-unknown: linear-gradient(to right, #232526, #414345);
+//WHITE TRANSPARENT
+@gradient-white: linear-gradient(rgba(255, 255, 255, 0) 0%, #ffffff 5%);
 //Default sizes
 @default-font-size: 16px;
 @default-line-height: 24px;
-@default-padding: 20px;
+@default-padding: 80px;
+@header-height: 60px;
 //Sizings
 @h1-font-size: 66px;
 @h2-font-size: 50px;
@@ -38,22 +47,22 @@
 @h6-font-size: 12px;
 //General mixins
 .fw {
-  float: left;
-  width: 100%;
+    float: left;
+    width: 100%;
 }
 
 .pw {
-  min-width: 320px;
-  .fw;
+    min-width: 320px;
+    .fw;
 }
 
 .fw-relative {
-  .fw;
-  position: relative;
+    .fw;
+    position: relative;
 }
 
 .font(@fs: @default-font-size, @fontw: 400) {
-  font-family: "Assistant", sans-serif;
-  font-size: @fs;
-  font-weight: @fontw;
+    font-family: 'Assistant', sans-serif;
+    font-size: @fs;
+    font-weight: @fontw;
 }
