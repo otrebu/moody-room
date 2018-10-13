@@ -6,6 +6,11 @@ const rekognition = require('./rekognition.js');
 const { initDbClient, initDb } = require('./dataService');
 const readFile = util.promisify(fs.readFile);
 
+router.get('/hello', async (ctx, next) => {
+    ctx.body = `Hello world!`;
+    return await next();
+});
+
 router.post('/picture-receiver', async (ctx, next) => {
     const { file } = ctx.request.files;
 
