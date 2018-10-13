@@ -6,6 +6,6 @@ router.get('/current-moods', async (ctx, next) => {
     return await next();
 });
 
-modules.exports = {
+module.exports = {
     router
 };

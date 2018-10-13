@@ -40,6 +40,6 @@ router.post('/picture-receiver', async (ctx, next) => {
     );
 });
 
-modules.exports = {
+module.exports = {
     router
 };
