@@ -1,5 +1,6 @@
-const Router = require('koa-better-router');
-let router = Router({ prefix: '/pi' }).loadMethods();
+const Router = require('koa-router');
+const router = new Router({ prefix: '/pi' });
+const fs = require('fs');
 const util = require('util');
 const rekognition = require('./rekognition.js');
 const { initDbClient, initDb } = require('./dataService');
@@ -40,6 +41,4 @@ router.post('/picture-receiver', async (ctx, next) => {
     );
 });
 
-module.exports = {
-    router
-};
+exports.piApiRouter = router;
