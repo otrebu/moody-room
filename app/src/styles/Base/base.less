@@ -6,6 +6,7 @@
 body {
   .font();
   min-width: 320px;
+  overflow: hidden;
   background-color: @color-body-background;
   color: @color-text;
   line-height: @default-line-height;
@@ -98,7 +99,7 @@ h6 {
 .h1,
 h1 {
   font-size: @h1-font-size;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 66px;
   margin-bottom: 40px;
 }
@@ -114,7 +115,7 @@ h2 {
 .h3,
 h3 {
   font-size: @h3-font-size;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 38px;
   margin-bottom: 25px;
 }
@@ -130,7 +131,7 @@ h4 {
 .h5,
 h5 {
   font-size: @h5-font-size;
-  font-weight: 700;
+  font-weight: 400;
   line-height: 31px;
   margin-bottom: 10px;
 }
@@ -180,10 +181,10 @@ input {
   float: left;
 }
 
-input[type=email],
-input[type=number],
-input[type=password],
-input[type=text],
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='text'],
 select,
 textarea {
   .fw;
@@ -192,14 +193,14 @@ textarea {
   .br(0);
   &.disabled,
   &:disabled,
-  &[disabled=disabled] {
+  &[disabled='disabled'] {
     opacity: 0.8;
     pointer-events: none;
   }
 }
 
 button,
-input[type=submit] {
+input[type='submit'] {
   float: left;
   .br(0);
   outline: 0;
@@ -228,17 +229,17 @@ input[type='image'],
 label[for],
 select,
 button,
-input[type=checkbox],
-input[type=radio],
+input[type='checkbox'],
+input[type='radio'],
 .pointer {
   cursor: pointer;
 }
 
-input[type=number] {
+input[type='number'] {
   padding-right: 0px;
 }
 
-input[type=number]::-webkit-inner-spin-button {
+input[type='number']::-webkit-inner-spin-button {
   width: 20px;
   height: 40px;
   right: 0;

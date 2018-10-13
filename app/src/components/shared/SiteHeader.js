@@ -1,18 +1,18 @@
-import React from "react";
+import React from 'react';
 
 export class SiteHeader extends React.Component {
-  render() {
-    const { changeTheme, menuIconClassName } = this.props;
+    render() {
+        const { toggleNavigation, iconClassName } = this.props;
 
-    return (
-      <header>
-        <div className="menu-trigger" onClick={changeTheme}>
-          <i className={"far " + menuIconClassName} />
-        </div>
-        <div className="logo">
-          <h4>Moody Room</h4>
-        </div>
-      </header>
-    );
-  }
+        return (
+            <header>
+                <div className="menu-trigger" onClick={toggleNavigation}>
+                    <i className={'far ' + iconClassName} />
+                </div>
+                <div className="logo">
+                    <h4>Moody Room</h4>
+                </div>
+            </header>
+        );
+    }
 }

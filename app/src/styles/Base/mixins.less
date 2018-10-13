@@ -1,37 +1,19 @@
 .gradient(@color: #F5F5F5, @start: #EEE, @stop: #FFF) {
-	background: @color;
-	background: -webkit-gradient(linear,
-	left bottom,
-	left top,
-	color-stop(0, @start),
-	color-stop(1, @stop));
-	background: -ms-linear-gradient(bottom,
-	@start,
-	@stop);
-	background: -moz-linear-gradient(center bottom,
-	@start 0%,
-	@stop 100%);
-	background: -o-linear-gradient(@stop,
-	@start);
-	filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@stop,@start));
+  background: @color;
+  background: -webkit-gradient( linear, left bottom, left top, color-stop(0, @start), color-stop(1, @stop));
+  background: -ms-linear-gradient(bottom, @start, @stop);
+  background: -moz-linear-gradient(center bottom, @start 0%, @stop 100%);
+  background: -o-linear-gradient(@stop, @start);
+  filter: e( %( "progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)", @stop, @start));
 }
 
 .bw-gradient(@color: #F5F5F5, @start: 0, @stop: 255) {
-	background: @color;
-	background: -webkit-gradient(linear,
-	left bottom,
-	left top,
-	color-stop(0, rgb(@start,@start,@start)),
-	color-stop(1, rgb(@stop,@stop,@stop)));
-	background: -ms-linear-gradient(bottom,
-	rgb(@start,@start,@start) 0%,
-	rgb(@stop,@stop,@stop) 100%);
-	background: -moz-linear-gradient(center bottom,
-	rgb(@start,@start,@start) 0%,
-	rgb(@stop,@stop,@stop) 100%);
-	background: -o-linear-gradient(rgb(@stop,@stop,@stop),
-	rgb(@start,@start,@start));
-	filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",rgb(@stop,@stop,@stop),rgb(@start,@start,@start)));
+  background: @color;
+  background: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(@start, @start, @start)), color-stop(1, rgb(@stop, @stop, @stop)));
+  background: -ms-linear-gradient( bottom, rgb(@start, @start, @start) 0%, rgb(@stop, @stop, @stop) 100%);
+  background: -moz-linear-gradient( center bottom, rgb(@start, @start, @start) 0%, rgb(@stop, @stop, @stop) 100%);
+  background: -o-linear-gradient(rgb(@stop, @stop, @stop), rgb(@start, @start, @start));
+  filter: e( %( "progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)", rgb(@stop, @stop, @stop), rgb(@start, @start, @start)));
 }
 
 .bordered(@top-color: #EEE, @right-color: #EEE, @bottom-color: #EEE, @left-color: #EEE) {
@@ -70,13 +52,13 @@
 }
 
 .opacity(@opacity: 0.5) {
-	-moz-opacity: @opacity;
-	-khtml-opacity: @opacity;
-	-webkit-opacity: @opacity;
-	opacity: @opacity;
-	@opperc: @opacity * 100;
-	-ms-filter: ~"progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})";
-	filter: ~"alpha(opacity=@{opperc})";
+  -moz-opacity: @opacity;
+  -khtml-opacity: @opacity;
+  -webkit-opacity: @opacity;
+  opacity: @opacity;
+  @opperc: @opacity * 100;
+  -ms-filter: ~ 'progid:DXImageTransform.Microsoft.Alpha(opacity=@{opperc})';
+  filter: ~ 'alpha(opacity=@{opperc})';
 }
 
 .transition-duration(@duration: 0.2s) {
@@ -94,11 +76,11 @@
   transform: @arguments;
 }
 
-.rotation(@deg:5deg) {
+.rotation(@deg: 5deg) {
   .transform(rotate(@deg));
 }
 
-.scale(@ratio:1.5) {
+.scale(@ratio: 1.5) {
   .transform(scale(@ratio));
 }
 
@@ -117,7 +99,7 @@
   .tr(all 0.6s linear);
 }
 
-.inner-shadow(@horizontal:0, @vertical:1px, @blur:2px, @alpha: 0.4) {
+.inner-shadow(@horizontal: 0, @vertical: 1px, @blur: 2px, @alpha: 0.4) {
   -webkit-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
   -moz-box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
   box-shadow: inset @horizontal @vertical @blur rgba(0, 0, 0, @alpha);
@@ -164,7 +146,7 @@
   column-rule-width: @columnRuleWidth;
 }
 
-.translate(@x:0, @y:0) {
+.translate(@x: 0, @y: 0) {
   .transform(translate(@x, @y));
 }
 
@@ -217,7 +199,7 @@
   right: 0;
 }
 
-.bk-cover(){
+.bk-cover() {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -229,16 +211,90 @@
   background-size: contain;
 }
 
-.bk-center(@bk-size: 20px){
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: @bk-size;
+.bk-center(@bk-size: 20px) {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: @bk-size;
 }
 
-.fill-area(){
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+.fill-area() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes raise {
+  from {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes alternateMouth {
+  from {
+    width: 60%;
+    height: 24%;
+    top: 60%;
+    left: 20%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(180deg);
+    height: 8%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+  }
+  40% {
+    height: 20%;
+    width: 20%;
+    left: 40%;
+    top: 60%;
+    border-radius: 50%;
+    transform: rotate(0deg);
+  }
+  80% {
+    width: 60%;
+    height: 24%;
+    top: 60%;
+    width: 30%;
+    left: 35%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    transform: rotate(0deg);
+  }
+  96% {
+    width: 60%;
+    height: 24%;
+    top: 60%;
+    left: 20%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    transform: rotate(0deg);
+  }
 }

@@ -1,8 +1,7 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from 'react';
 
 export class Settings extends React.Component {
-  render() {
-    return <h1>Settings</h1>;
-  }
+    render() {
+        return <h1>Settings</h1>;
+    }
 }
