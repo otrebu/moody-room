@@ -1,173 +1,178 @@
 //Gradient Backgrounds
-.bg-happy {
-  background-image: @gradient-happy;
+.bg-happy,
+.bg-happy .btn {
+    background: @gradient-happy;
 }
 
-.bg-sad {
-  background-image: @gradient-sad;
+.bg-sad,
+.bg-sad .btn {
+    background: @gradient-sad;
 }
 
-.bg-angry {
-  background-image: @gradient-angry;
+.bg-angry,
+.bg-angry .btn {
+    background: @gradient-angry;
 }
 
-.bg-confused {
-  background-image: @gradient-confused;
+.bg-confused,
+.bg-confused .btn {
+    background: @gradient-confused;
 }
 
-.bg-disgusted {
-  background-image: @gradient-disgusted;
+.bg-disgusted,
+.bg-disgusted .btn {
+    background: @gradient-disgusted;
 }
 
-.bg-surprised {
-  background-image: @gradient-surprised;
+.bg-surprised,
+.bg-surprised .btn {
+    background: @gradient-surprised;
 }
 
-.bg-calm {
-  background-image: @gradient-calm;
+.bg-calm,
+.bg-calm .btn {
+    background: @gradient-calm;
 }
 
-.bg-unknown {
-  background-image: @gradient-unknown;
+.bg-unknown,
+.bg-unknown .btn {
+    background: @gradient-unknown;
 }
 
 //Button Styles
 .btn {
-  float: left;
-  cursor: pointer;
-  .tr-f();
-
-  &.active,
-  &:active,
-  &:hover {
-    .tr-s();
-  }
-
-  &.active,
-  &:hover {
-    // background-color: lighten(white, 10%);
-    // border-color: lighten(white, 10%);
-  }
-
-  &:active {
-    // background-color: darken(white, 10%);
-    // border-color: darken(white, 10%);
-  }
-
-  &.disabled,
-  &[disabled],
-  &[disabled=disabled]{
-    pointer-events: none;
-    opacity: 0.6;
-  }
+    float: left;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    width: auto;
+    padding: 15px 5px;
+    min-width: 190px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid white;
+    .br(2px);
+    color: white;
+    .tr-f();
+    &.active,
+    &:active,
+    &:hover {
+        .tr-s();
+    }
+    &.active,
+    &:hover {
+        // background-color: lighten(white, 10%);
+        // border-color: lighten(white, 10%);
+    }
+    &:active {
+        // background-color: darken(white, 10%);
+        // border-color: darken(white, 10%);
+    }
+    &.disabled,
+    &[disabled],
+    &[disabled='disabled'] {
+        pointer-events: none;
+        opacity: 0.6;
+    }
 }
 
 .btn-secondary {
-  &.active,
-  &:active,
-  &:hover {
-    .tr-s();
-  }
-
-  &.active,
-  &:hover {
-    // background-color: lighten(white, 10%);
-    // border-color: lighten(white, 10%);
-  }
-
-  &:active {
-    // background-color: darken(white, 10%);
-    // border-color: darken(white, 10%);
-  }
+    &.active,
+    &:active,
+    &:hover {
+        .tr-s();
+    }
+    &.active,
+    &:hover {
+        // background-color: lighten(white, 10%);
+        // border-color: lighten(white, 10%);
+    }
+    &:active {
+        // background-color: darken(white, 10%);
+        // border-color: darken(white, 10%);
+    }
 }
 
 .btn-tertiary {
-  &.active,
-  &:active,
-  &:hover {
-    .tr-s();
-  }
-
-  &.active,
-  &:hover {
-    // background-color: lighten(white, 10%);
-    // border-color: lighten(white, 10%);
-  }
-
-  &:active {
-    // background-color: darken(white, 10%);
-    // border-color: darken(white, 10%);
-  }
+    &.active,
+    &:active,
+    &:hover {
+        .tr-s();
+    }
+    &.active,
+    &:hover {
+        // background-color: lighten(white, 10%);
+        // border-color: lighten(white, 10%);
+    }
+    &:active {
+        // background-color: darken(white, 10%);
+        // border-color: darken(white, 10%);
+    }
 }
 
 .btn-full {
-  width: 100%;
+    width: 100%;
 }
 
 .btn-center {
-  width: auto;
-  float: none;
-  display: inline-block;
+    width: auto;
+    float: none;
+    display: inline-block;
 }
 
 //Inputs Styles
-input[type=email],
-input[type=number],
-input[type=password],
-input[type=text],
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='text'],
 select,
 textarea {
-	border: 1px solid @color-border;
-	background-color: white;
-
-	&:not(.no-focus) {
-		&:focus {
-      
-		}
-	}
+    border: 1px solid @color-border;
+    background-color: white;
+    &:not(.no-focus) {
+        &:focus {
+        }
+    }
 }
 
 select {
-  cursor: pointer;
-  background-position: right 15px center;
-  background-size: 10px;
-  background-repeat: no-repeat;
+    cursor: pointer;
+    background-position: right 15px center;
+    background-size: 10px;
+    background-repeat: no-repeat;
 }
 
 textarea {
-  height: 170px;
+    height: 170px;
 }
 
 //Module Styles
 .module--four {
-  float: left;
-  position: relative;
-  width: 23.5%;
-  margin: 0 2% 2% 0;
-
-  &:nth-of-type(4n) {
-    margin-right: 0;
-  }
+    float: left;
+    position: relative;
+    width: 23.5%;
+    margin: 0 2% 2% 0;
+    &:nth-of-type(4n) {
+        margin-right: 0;
+    }
 }
 
 .module--third {
-  float: left;
-  position: relative;
-  width: 32%;
-  margin: 0 2% 2% 0;
-
-  &:nth-of-type(3n) {
-    margin-right: 0;
-  }
+    float: left;
+    position: relative;
+    width: 32%;
+    margin: 0 2% 2% 0;
+    &:nth-of-type(3n) {
+        margin-right: 0;
+    }
 }
 
 .module--half {
-  float: left;
-  position: relative;
-  width: 49%;
-  margin: 0 2% 2% 0;
-
-  &:nth-of-type(2n) {
-    margin-right: 0;
-  }
+    float: left;
+    position: relative;
+    width: 49%;
+    margin: 0 2% 2% 0;
+    &:nth-of-type(2n) {
+        margin-right: 0;
+    }
 }

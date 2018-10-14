@@ -14,7 +14,9 @@ class App extends Component {
             navigationClassName: Themes.navigation.container.closedClassName,
             iconClassName: Themes.navigation.icon.closedClassName,
             appStore: {},
-            isDataLoaded: false
+            timer: null,
+            isDataLoaded: false,
+            currentMoodTimer: null
         };
 
         this.toggleNavigation = () => {
@@ -33,32 +35,46 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('http://52.56.44.112/api/current-moods')
-            .then(results => {
-                if (results.status === 200) {
-                    return results.json();
-                } else {
-                    return null;
-                }
-            })
-            .then(data => {
-                if (data != null) {
-                    console.log(data);
+        let requestCurrentData = () =>
+            fetch('http://52.56.44.112/api/moods/current/')
+                .then(results => {
+                    if (results.status === 200) {
+                        return results.json();
+                    } else {
+                        return null;
+                    }
+                })
+                .then(data => {
+                    if (data != null) {
+                        const { moodSummary } = data;
+                        const commonMoodName = data.commonMood ? data.commonMood.name : 'unknown';
+                        const personList = data;
 
-                    const { commonMoodName, moodSummary } = data;
-                    const personList = data.facialAttributes;
+                        this.setState({
+                            appStore: {
+                                commonMoodName,
+                                moodSummary,
+                                personList
+                            },
+                            isDataLoaded: true
+                        });
+                    }
+                });
 
-                    this.setState({
-                        appStore: {
-                            commonMoodName,
-                            moodSummary,
-                            personList
-                        },
-                        isDataLoaded: true
-                    });
-                }
-            });
+        requestCurrentData();
+
+        this.setState({
+            timer: setInterval(function() {
+                requestCurrentData();
+                console.log('get again');
+            }, 15000)
+        });
     }
+
+    // componentWillUnmount() {
+    //     console.log('main app timer stopped');
+    //     clearInterval(this.state.timer);
+    // }
 
     render() {
         const { appStore, iconClassName, navigationClassName, isDataLoaded } = this.state;
@@ -66,7 +82,7 @@ class App extends Component {
         return (
             <Router>
                 <AppContext.Provider value={appStore}>
-                    <div className={`App bg-${commonMoodName}`}>
+                    <div className={`App bg-${commonMoodName ? commonMoodName : 'unknown'}`}>
                         <SiteHeader
                             toggleNavigation={this.toggleNavigation}
                             iconClassName={iconClassName}

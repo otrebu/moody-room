@@ -6,21 +6,19 @@ export class Home extends React.Component {
         return (
             <div>
                 <div className="content-container f-text-center">
-                    <p>
-                        Welcome to MoodyRoom...Welcome to MoodyRoom...Welcome to MoodyRoom...Welcome
-                        to MoodyRoom...Welcome to MoodyRoom...Welcome to MoodyRoom...Welcome to
-                        MoodyRoom...Welcome to MoodyRoom...Welcome to MoodyRoom...Welcome to
-                        MoodyRoom...Welcome to MoodyRoom...
-                    </p>
-                    <p>
-                        Welcome to MoodyRoom...Welcome to MoodyRoom...Welcome to MoodyRoom...Welcome
-                        to MoodyRoom...Welcome to MoodyRoom...
-                    </p>
+                    <h3>
+                        In todays world, humans frequently hide their emotions.
+                        <br />
+                        Lets allow machines to display them for us again....
+                    </h3>
+                    <p />
+                    <p />
+                    <p />
                     <h5>
-                        <Link to="/current">Current</Link>
+                        <Link to="/current">View the current moods</Link>
                     </h5>
                     <h5>
-                        <Link to="/history">History</Link>
+                        <Link to="/history">View a timelapse of recorded moods</Link>
                     </h5>
                 </div>
             </div>

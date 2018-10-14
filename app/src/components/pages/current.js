@@ -8,13 +8,11 @@ export class Current extends React.Component {
             <AppContext.Consumer>
                 {appStore => {
                     let { moodSummary } = appStore;
-
                     const happy = moodSummary.filter(mood => mood.name === 'happy')[0];
                     const happyCount = happy ? happy.count : 0;
 
                     const sad = moodSummary.filter(mood => mood.name === 'sad')[0];
                     const sadCount = sad ? sad.count : 0;
-
                     moodSummary = moodSummary
                         .map(mood => {
                             if (mood.name !== 'happy' && mood.name !== 'sad') {
@@ -22,12 +20,12 @@ export class Current extends React.Component {
                             }
                         })
                         .filter(mood => mood !== undefined);
-
                     return (
                         <div>
                             <div className="title-container">
                                 <h2>Current Moods</h2>
                             </div>
+
                             <div className="content-container">
                                 <div>
                                     <span className="smiley-tag">Happy: {happyCount}</span>
@@ -40,7 +38,10 @@ export class Current extends React.Component {
                                 </div>
                             </div>
                             <div>
-                                <PersonListing personList={appStore.personList} />
+                                <PersonListing
+                                    personList={appStore.personList}
+                                    hideTimestamp={true}
+                                />
                             </div>
                         </div>
                     );

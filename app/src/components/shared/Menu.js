@@ -32,11 +32,11 @@ export class Menu extends React.Component {
                             People
                         </NavLink>
                     </h2> */}
-                    <h2>
+                    {/* <h2>
                         <NavLink to="/settings" activeClassName="active" onClick={toggleNavigation}>
                             Settings
                         </NavLink>
-                    </h2>
+                    </h2> */}
                 </div>
             </div>
         );
