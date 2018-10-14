@@ -1,153 +1,152 @@
 #root {
-    height: 100%;
+  height: 100%;
 }
 
 .App {
-    height: 100%;
+  height: 100%;
 }
 
 header {
-    height: 60px;
-    text-align: center;
+  height: 60px;
+  text-align: center;
 }
 
 .menu-trigger {
-    float: left;
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 20px;
-    line-height: 1;
-    cursor: pointer;
-    i {
-        font-size: 20px;
-    }
+  float: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  line-height: 1;
+  cursor: pointer;
+  i {
+    font-size: 20px;
+  }
 }
 
 .logo {
-    float: none;
-    display: inline-block;
-    text-align: center;
-    h4 {
-        width: auto;
-        margin: 0;
-        line-height: 60px;
-    }
+  float: none;
+  display: inline-block;
+  text-align: center;
+  h4 {
+    width: auto;
+    margin: 0;
+    line-height: 60px;
+  }
 }
 
 .navigation {
-    .fw;
-    height: calc(100vh - @header-height);
-    top: 60px;
-    left: 0;
-    position: absolute;
-    background: @gradient-white;
-    padding: 40px 0;
-    opacity: 0;
-    pointer-events: hidden;
-    visibility: hidden;
-    z-index: 100;
+  .fw;
+  height: calc(100vh - @header-height);
+  top: 60px;
+  left: 0;
+  position: absolute;
+  background: @gradient-white;
+  padding: 40px 0;
+  opacity: 0;
+  pointer-events: hidden;
+  visibility: hidden;
+  z-index: 100;
+  .tr-s();
+  &.open {
+    opacity: 1;
+    pointer-events: visible;
+    visibility: visible;
     .tr-s();
-    &.open {
-        opacity: 1;
-        pointer-events: visible;
-        visibility: visible;
-        .tr-s();
-        h2 {
-            top: 0;
-            opacity: 1;
-            &:nth-child(1) {
-                .tr(all 0.3s ease 0.1s);
-            }
-            &:nth-child(2) {
-                .tr(all 0.3s ease 0.2s);
-            }
-            &:nth-child(3) {
-                .tr(all 0.3s ease 0.3s);
-            }
-            &:nth-child(4) {
-                .tr(all 0.3s ease 0.4s);
-            }
-            &:nth-child(5) {
-                .tr(all 0.3s ease 0.5s);
-            }
-        }
-    }
     h2 {
-        margin: 0;
-        padding: 30px 0;
-        text-align: center;
-        top: 20%;
-        opacity: 0;
-        .tr-s();
+      top: 0;
+      opacity: 1;
+      &:nth-child(1) {
+        .tr(all 0.3s ease 0.1s);
+      }
+      &:nth-child(2) {
+        .tr(all 0.3s ease 0.2s);
+      }
+      &:nth-child(3) {
+        .tr(all 0.3s ease 0.3s);
+      }
+      &:nth-child(4) {
+        .tr(all 0.3s ease 0.4s);
+      }
+      &:nth-child(5) {
+        .tr(all 0.3s ease 0.5s);
+      }
     }
-    a {
-        .fw;
-        padding: 20px 0;
-        display: inline-block;
-        vertical-align: middle;
-        width: 100%;
-        text-decoration: none;
-        color: @color-2; // &.active {
-        //     border-color: @color-1;
-        //     border-bottom: 2px solid white;
-        //     color: @color-1;
-        // }
-    }
+  }
+  h2 {
+    margin: 0;
+    padding: 30px 0;
+    text-align: center;
+    top: 20%;
+    opacity: 0;
+    .tr-s();
+  }
+  a {
+    .fw;
+    padding: 20px 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    text-decoration: none;
+    color: @color-2; // &.active {
+    //     border-color: @color-1;
+    //     border-bottom: 2px solid white;
+    //     color: @color-1;
+    // }
+  }
 }
 
 .main-content {
+  .fw;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  height: calc(100vh - @header-height);
+  padding: 0 @default-padding;
+  padding-top: 50px;
+  [class*='container'] {
     .fw;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    overflow: auto;
-    height: calc(100vh - @header-height);
-    padding: 0 @default-padding;
-    padding-top: 50px;
-    [class*='container'] {
-        .fw;
-    }
+  }
 }
 
 .content-container {
-    margin-bottom: 40px;
-    span.smiley-tag {
-        .h5;
-        width: auto;
-        margin-right: 10px;
-        margin-bottom: 10px;
-    }
+  margin-bottom: 40px;
+  span.smiley-tag {
+    .h5;
+    width: auto;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 }
 
-.title-container {
-}
+.title-container {}
 
 .listing-container {
+  .fw;
+  .wrapper {
     .fw;
-    .wrapper {
-        .fw;
+  }
+  .smiley {
+    width: 32%;
+    height: 0;
+    padding-bottom: 32%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+    &:nth-child(3n) {
+      margin-right: 0;
     }
-    .smiley {
-        width: 32%;
-        height: 0;
-        padding-bottom: 32%;
-        margin-right: 2%;
-        margin-bottom: 2%;
-        &:nth-child(3n) {
-            margin-right: 0;
-        }
-    }
+  }
 }
 
 .person-item {
-    float: left;
-    background-color: white;
-    .br(6px);
-    width: 30%;
-    margin-right: 2%;
-    padding: 25px;
-    h3 {
-        color: @color-1;
-    }
+  float: left;
+  background-color: white;
+  .br(6px);
+  width: 30%;
+  margin-right: 2%;
+  padding: 25px;
+  h3 {
+    color: @color-1;
+  }
 }

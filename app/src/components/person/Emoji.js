@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Emoji extends Component {
     render() {
         const { mood, facialAttributes } = this.props.person;
-        console.log(mood);
+        // console.log(mood);
         let facialAttributeClasses = '';
 
         if (facialAttributes.hasBeard) {

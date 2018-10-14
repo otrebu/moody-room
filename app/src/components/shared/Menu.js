@@ -18,16 +18,12 @@ export class Menu extends React.Component {
                             Current
                         </NavLink>
                     </h2>
-                    {/* <h2>
-                        <NavLink
-                            to="/history"
-                            activeClassName="active"
-                            onClick={toggleNavigation}
-                        >
+                    <h2>
+                        <NavLink to="/history" activeClassName="active" onClick={toggleNavigation}>
                             History
                         </NavLink>
                     </h2>
-                    <h2>
+                    {/* <h2>
                         <NavLink
                             to="/people"
                             activeClassName="active"
@@ -36,15 +32,11 @@ export class Menu extends React.Component {
                             People
                         </NavLink>
                     </h2> */}
-                    {/* <h2>
-                        <NavLink
-                            to="/settings"
-                            activeClassName="active"
-                            onClick={toggleNavigation}
-                        >
+                    <h2>
+                        <NavLink to="/settings" activeClassName="active" onClick={toggleNavigation}>
                             Settings
                         </NavLink>
-                    </h2> */}
+                    </h2>
                 </div>
             </div>
         );

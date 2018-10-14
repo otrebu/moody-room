@@ -25,4 +25,4 @@ export const Themes = {
     toggleNavigationHandler: () => {}
 };
 
-export const ThemeContext = React.createContext(Themes.moods.happy);
+export const ThemeContext = React.createContext(Themes.moods.happys);
