@@ -17,33 +17,26 @@ router.get('/hello', async (ctx, next) => {
 });
 
 const matchColorWithMood = moodName => {
-    let colour = '#232526';
-
     switch (moodName) {
+        case 'happy':
+            return '#ffff00';
         case 'sad':
-            colour = '#243b55';
-            break;
-        case 'sad':
-            colour = '#243b55';
-            break;
+            return '#3366cc';
         case 'angry':
-            colour = '#c31432';
-            break;
+            return '#ff0000';
         case 'confused':
-            colour = '#71b280';
-            break;
+            return '#71b280';
         case 'disgusted':
-            colour = '#1d4350';
-            break;
+            return '#295e70';
         case 'surprised':
-            colour = '#7303c0';
-            break;
+            return '#7303c0';
         case 'calm':
-            colour = '#076585';
-            break;
+            return '#86dcf9';
+        case 'unknown':
+            return '#664400';
     }
 
-    return colour;
+    return '#664400';
 };
 
 router.post('/picture-receiver', async (ctx, next) => {
@@ -69,14 +62,16 @@ router.post('/picture-receiver', async (ctx, next) => {
                     const facesCollection = await db.collection('faces');
                     await facesCollection.insertOne(data);
 
-                    const { commonMoodName } = elaborateMoodData(data);
-
+                    const { commonMood } = elaborateMoodData(data);
+                    console.log('commonMoodName', commonMood);
+                    const moodColour = matchColorWithMood(commonMood.name);
+                    console.log('moodColour', moodColour);
                     client
                         .setState('all', {
                             power: 'on',
-                            color: matchColorWithMood(commonMoodName),
-                            brightness: 0.5,
-                            duration: 5
+                            color: moodColour,
+                            brightness: 1,
+                            duration: 20
                         })
                         .then(console.log, console.error);
 

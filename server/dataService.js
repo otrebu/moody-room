@@ -1,5 +1,6 @@
-const MongoClient = require('mongodb').MongoClient;
-
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
+const ObjectId = mongodb.ObjectID;
 const mongoUrl = 'mongodb://localhost:27017';
 const dbName = 'moody-room-db';
 
@@ -31,27 +32,24 @@ module.exports = {
 
         lastFaces.FaceDetails.forEach(faceDetail => {
             let prevalentMood = calculatePrevalentMood(faceDetail.Emotions);
+
             if (prevalentMood) {
                 prevalentMood = { name: prevalentMood.Type.toLowerCase(), count: 1 };
 
-                const doesSummaryContainsThisMood = moodSummary.filter(
-                    m => m.name === prevalentMood.name
-                ).length;
+                const prevalentMoodIndex = moodSummary.findIndex(
+                    pm => pm.name === prevalentMood.name
+                );
 
-                if (!doesSummaryContainsThisMood) {
+                if (prevalentMoodIndex === -1) {
                     moodSummary.push(prevalentMood);
                 } else {
-                    const prevalentMoodIndex = moodSummary.findIndex(
-                        pm => pm.name === prevalentMood.name
-                    );
-                    if (prevalentMoodIndex >= 0) {
-                        moodSummary[prevalentMoodIndex].count += 1;
-                    }
+                    moodSummary[prevalentMoodIndex].count += 1;
                 }
             }
+            prevalentMood = null;
         });
 
-        const commonMoodName = moodSummary.reduce(
+        const commonMood = moodSummary.reduce(
             (accumulator, mood) => {
                 console.log(accumulator);
                 accumulator = mood.count > accumulator.count ? mood : accumulator;
@@ -82,6 +80,8 @@ module.exports = {
             }
         }).filter(facialAttribute => facialAttribute !== undefined);
 
-        return { commonMoodName, moodSummary, facialAttributes, lastFaces };
+        const timestamp = ObjectId(lastFaces._id).getTimestamp();
+
+        return { timestamp, commonMood, moodSummary, facialAttributes };
     }
 };

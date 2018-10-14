@@ -31,7 +31,31 @@ router.get('/moods/last/:n', async (ctx, next) => {
         .limit(parseInt(ctx.params.n))
         .toArray()).reverse();
 
-    ctx.body = lastNTimeframeFaces.map(faces => elaborateMoodData(faces));
+    const elaboratedMoodDataForNTimeFrames = lastNTimeframeFaces.map(faces => {
+        const d = elaborateMoodData(faces);
+        return d;
+    });
+
+    let moodSummaryForNTimeFrames = [];
+
+    elaboratedMoodDataForNTimeFrames.forEach(elaboratedMoodData => {
+        const { moodSummary } = elaboratedMoodData;
+
+        moodSummary.forEach(mood => {
+            const moodIndex = moodSummaryForNTimeFrames.findIndex(pm => pm.name === mood.name);
+
+            if (moodIndex === -1) {
+                moodSummaryForNTimeFrames.push({ name: mood.name, count: mood.count });
+            } else {
+                moodSummaryForNTimeFrames[moodIndex].count += 1;
+            }
+        });
+    });
+
+    ctx.body = {
+        moodTimestampSummary: moodSummaryForNTimeFrames,
+        moodTimeFrames: elaboratedMoodDataForNTimeFrames
+    };
 
     return await next();
 });
