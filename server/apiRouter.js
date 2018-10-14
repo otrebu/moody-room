@@ -1,8 +1,8 @@
 const Router = require('koa-router');
-const { initDbClient, initDb } = require('./dataService');
+const { initDbClient, initDb, elaborateMoodData } = require('./dataService');
 const router = new Router({ prefix: '/api' });
 
-router.get('/current-moods', async (ctx, next) => {
+router.get('/moods/current', async (ctx, next) => {
     const dbClient = await initDbClient();
     const db = initDb(dbClient);
     const facesCollection = await db.collection('faces');
@@ -13,80 +13,49 @@ router.get('/current-moods', async (ctx, next) => {
         .limit(1)
         .next();
 
-    let moodSummary = [];
-
-    lastFaces.FaceDetails.forEach(faceDetail => {
-        let prevalentMood = null;
-
-        faceDetail.Emotions.forEach(emotion => {
-            if (!prevalentMood) {
-                prevalentMood = emotion;
-            }
-            if (
-                emotion.Type !== prevalentMood.Type &&
-                emotion.Confidence > prevalentMood.Confidence
-            ) {
-                prevalentMood = emotion;
-            }
-        });
-
-        prevalentMood = { name: prevalentMood.Type.toLowerCase(), count: 1 };
-
-        const doesSummaryContainsThisMood = moodSummary.filter(
-            m => m.name === prevalentMood.name
-        ).length;
-
-        if (!doesSummaryContainsThisMood) {
-            moodSummary.push(prevalentMood);
-        } else {
-            const prevalentMoodIndex = moodSummary.findIndex(
-                pm => pm.name === prevalentMood.name
-            );
-            if (prevalentMoodIndex >= 0) {
-                moodSummary[prevalentMoodIndex].count += 1;
-            }
-        }
-    });
-
-    const facialAttributes = lastFaces.FaceDetails.map(faceDetail => {
-        let prevalentMood = null;
-
-        faceDetail.Emotions.forEach(emotion => {
-            if (!prevalentMood) {
-                prevalentMood = emotion;
-            }
-            if (
-                emotion.Type !== prevalentMood.Type &&
-                emotion.Confidence > prevalentMood.Confidence
-            ) {
-                prevalentMood = emotion;
-            }
-        });
-
-        return {
-            mood: prevalentMood.Type.toLowerCase(),
-            facialAttributes: {
-                hasBeard:
-                    faceDetail.Beard.Value === true &&
-                    faceDetail.Beard.Confidence > 90,
-                hasMoustache:
-                    faceDetail.Mustache.Value === true &&
-                    faceDetail.Mustache.Confidence > 90,
-                hasSunglasses:
-                    faceDetail.Sunglasses.Value === true &&
-                    faceDetail.Sunglasses.Confidence > 90,
-                hasGlasses:
-                    faceDetail.Eyeglasses.Value === true &&
-                    faceDetail.Eyeglasses.Confidence > 90
-            }
-        };
-    });
-
-    console.log(moodSummary);
-
     dbClient.close();
 
-    ctx.body = { moodSummary, facialAttributes, lastFaces };
+    ctx.body = elaborateMoodData(lastFaces);
+
+    return await next();
+});
+
+router.get('/moods/last/:n', async (ctx, next) => {
+    const dbClient = await initDbClient();
+    const db = initDb(dbClient);
+    const facesCollection = await db.collection('faces');
+
+    const lastNTimeframeFaces = (await facesCollection
+        .find()
+        .sort({ $natural: -1 })
+        .limit(parseInt(ctx.params.n))
+        .toArray()).reverse();
+
+    const elaboratedMoodDataForNTimeFrames = lastNTimeframeFaces.map(faces => {
+        const d = elaborateMoodData(faces);
+        return d;
+    });
+
+    let moodSummaryForNTimeFrames = [];
+
+    elaboratedMoodDataForNTimeFrames.forEach(elaboratedMoodData => {
+        const { moodSummary } = elaboratedMoodData;
+
+        moodSummary.forEach(mood => {
+            const moodIndex = moodSummaryForNTimeFrames.findIndex(pm => pm.name === mood.name);
+
+            if (moodIndex === -1) {
+                moodSummaryForNTimeFrames.push({ name: mood.name, count: mood.count });
+            } else {
+                moodSummaryForNTimeFrames[moodIndex].count += 1;
+            }
+        });
+    });
+
+    ctx.body = {
+        moodTimestampSummary: moodSummaryForNTimeFrames,
+        moodTimeFrames: elaboratedMoodDataForNTimeFrames
+    };
 
     return await next();
 });
