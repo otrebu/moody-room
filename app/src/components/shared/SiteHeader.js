@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export class SiteHeader extends React.Component {
     render() {
@@ -10,7 +11,9 @@ export class SiteHeader extends React.Component {
                     <i className={'far ' + iconClassName} />
                 </div>
                 <div className="logo">
-                    <h4>Moody Room</h4>
+                    <NavLink to="/">
+                        <h4>Moody Room</h4>
+                    </NavLink>
                 </div>
             </header>
         );

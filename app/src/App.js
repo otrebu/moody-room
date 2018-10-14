@@ -3,9 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './components/Routes';
 import { SiteHeader } from './components/shared/SiteHeader';
 import { Menu } from './components/shared/Menu';
-import { Themes } from './themes/Themes';
-
-const AppContext = React.createContext({ commondMood: 'unknown' });
+import { Themes } from './Contexts/Themes';
+import { AppContext } from './Contexts/AppContext';
 
 class App extends Component {
     constructor(props) {
@@ -14,7 +13,8 @@ class App extends Component {
             isNavigationOpen: Themes.navigation.isOpen,
             navigationClassName: Themes.navigation.container.closedClassName,
             iconClassName: Themes.navigation.icon.closedClassName,
-            appStore: {}
+            appStore: {},
+            isDataLoaded: false
         };
 
         this.toggleNavigation = () => {
@@ -33,41 +33,52 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const response = {
-            moodCount: 2,
-            commonMood: 'confused'
-        };
+        fetch('http://52.56.44.112/api/current-moods')
+            .then(results => {
+                if (results.status === 200) {
+                    return results.json();
+                } else {
+                    return null;
+                }
+            })
+            .then(data => {
+                if (data != null) {
+                    console.log(data);
 
-        const { moodCount, commonMood } = response;
+                    const { commonMoodName, moodSummary } = data;
+                    const personList = data.facialAttributes;
 
-        this.setState({
-            appStore: { commonMood, moodCount }
-        });
+                    this.setState({
+                        appStore: {
+                            commonMoodName,
+                            moodSummary,
+                            personList
+                        },
+                        isDataLoaded: true
+                    });
+                }
+            });
     }
 
     render() {
-        const { appStore, iconClassName, navigationClassName } = this.state;
-        const { commonMood, moodCount } = appStore;
+        const { appStore, iconClassName, navigationClassName, isDataLoaded } = this.state;
+        const { commonMoodName } = appStore;
         return (
             <Router>
                 <AppContext.Provider value={appStore}>
-                    {commonMood ? (
-                        <div className={`App bg-${commonMood}`}>
-                            <SiteHeader
-                                toggleNavigation={this.toggleNavigation}
-                                iconClassName={iconClassName}
-                            />
+                    <div className={`App bg-${commonMoodName}`}>
+                        <SiteHeader
+                            toggleNavigation={this.toggleNavigation}
+                            iconClassName={iconClassName}
+                        />
 
-                            <Menu
-                                toggleNavigation={this.toggleNavigation}
-                                navigationClass={navigationClassName}
-                            />
+                        <Menu
+                            toggleNavigation={this.toggleNavigation}
+                            navigationClass={navigationClassName}
+                        />
 
-                            <div className="main-content">
-                                <Routes />
-                            </div>
-                        </div>
-                    ) : null}
+                        <div className="main-content">{isDataLoaded ? <Routes /> : null}</div>
+                    </div>
                 </AppContext.Provider>
             </Router>
         );
