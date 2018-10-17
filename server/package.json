@@ -24,6 +24,7 @@
         "koa": "^2.5.3",
         "koa-body": "^4.0.4",
         "koa-router": "^7.4.0",
+        "koa-static": "^5.0.0",
         "lifx-http-api": "^1.0.3",
         "mongodb": "^3.1.8"
     }
