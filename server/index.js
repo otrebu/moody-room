@@ -15,10 +15,10 @@ app.use(async (ctx, next) => {
     return await next();
 })
     .use(async (ctx, next) => {
-        if (REACT_ROUTER_PATHS.filter(r => ctx.request.path.includes(r)).length > 0)
+        if (REACT_ROUTER_PATHS.includes(ctx.request.path)) {
             ctx.request.path = '/';
-
-        await next();
+        }
+        return await next();
     })
     .use(serveStatic('../app/build'))
     .use(cors())
