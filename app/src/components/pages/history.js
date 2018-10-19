@@ -32,11 +32,11 @@ export class History extends React.Component {
         let moodDataList = [];
         const timelapseDuration = this.props.match.params.count || 250;
 
-        const data = await fetch('http://52.56.44.112/api/moods/last/' + timelapseDuration).then(
-            results => {
-                return results.json();
-            }
-        );
+        const data = await fetch(
+            'http://api.moodyroom.space/api/moods/last/' + timelapseDuration
+        ).then(results => {
+            return results.json();
+        });
         if (data != null) {
             personDataList = data.moodTimeFrames;
             moodDataList = data.moodTimestampSummary;

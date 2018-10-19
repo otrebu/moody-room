@@ -36,7 +36,7 @@ class App extends Component {
 
     componentDidMount() {
         let requestCurrentData = () =>
-            fetch('http://52.56.44.112/api/moods/current/')
+            fetch('http://api.moodyroom.space/api/moods/current/')
                 .then(results => {
                     if (results.status === 200) {
                         return results.json();
