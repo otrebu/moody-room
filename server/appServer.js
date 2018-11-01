@@ -14,6 +14,7 @@ appSever
         // if (REACT_ROUTER_PATHS.includes(ctx.request.path)) {
         //     ctx.request.path = '/';
         // }
+        console.log(ctx.request);
         ctx.request.path = '/';
         return await next();
     })
