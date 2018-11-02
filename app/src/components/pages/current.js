@@ -18,6 +18,7 @@ export class Current extends React.Component {
                             if (mood.name !== 'happy' && mood.name !== 'sad') {
                                 return mood;
                             }
+                            return null;
                         })
                         .filter(mood => mood !== undefined);
                     return (

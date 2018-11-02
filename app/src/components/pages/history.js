@@ -1,6 +1,6 @@
 import React from 'react';
 import { PersonListing } from '../person/Listing';
-import { Radar, Pie } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2';
 
 export class History extends React.Component {
     constructor(props) {
