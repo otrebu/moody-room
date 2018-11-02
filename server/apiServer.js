@@ -9,8 +9,7 @@ const apiServer = new Koa();
 apiServer
     .use(async (ctx, next) => {
         console.log('API URL: ', ctx.url);
-
-        return await next();
+        await next();
     })
     .use(cors())
     .use(koaBody({ multipart: true, jsonLimit: '30mb', formLimit: '30mb' }))
@@ -18,4 +17,8 @@ apiServer
     .use(piApiRouter.allowedMethods())
     .use(apiRouter.routes())
     .use(apiRouter.allowedMethods())
+    .use(async (ctx, next) => {
+        console.log('Body: ', ctx.body);
+        await next();
+    })
     .listen(8080);

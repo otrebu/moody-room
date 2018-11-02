@@ -4,7 +4,7 @@ const router = new Router({ prefix: '/api' });
 
 router.get('/hello', async (ctx, next) => {
     ctx.body = 'Hello world';
-    return await next();
+    await next();
 });
 
 router.get('/moods/current', async (ctx, next) => {
