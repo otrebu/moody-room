@@ -2,24 +2,39 @@ const Koa = require('koa');
 const cors = require('@koa/cors');
 const serveStatic = require('koa-static');
 const path = require('path');
+const fs = require('fs');
+const glob = require('glob');
 
 const appSever = new Koa();
+const appFilePath = path.join(__dirname, '../app/build');
+let validRoutes = [];
 
-const REACT_ROUTER_PATHS = ['/current', '/history', '/settings'];
+const getAllFiles = (src, callback) => {
+    glob(`${src}/**/*`, callback);
+};
+
+getAllFiles(appFilePath, (err, res) => {
+    if (err) {
+        console.log('Error', err);
+    } else {
+        validRoutes = res.map(filePath => filePath.replace(appFilePath, '').toLowerCase());
+    }
+});
+
+const isRouteValid = url => {
+    if (!validRoutes || !url) return false;
+    return validRoutes.includes(url.toLowerCase());
+};
 
 appSever
     .use(async (ctx, next) => {
         console.log('APP URL: ', ctx.url);
-
-        return await next();
+        await next();
     })
     .use(async (ctx, next) => {
-        if (REACT_ROUTER_PATHS.includes(ctx.request.path)) {
-            ctx.request.path = '/';
-        }
-        console.log(ctx.request);
-        ctx.request.path = '/';
-        return await next();
+        if (!isRouteValid(ctx.url)) ctx.path = '/';
+
+        await next();
     })
     .use(serveStatic(path.join(__dirname, '../app/build')))
     .use(cors())
