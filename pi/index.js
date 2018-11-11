@@ -14,41 +14,46 @@ const main = async () => {
     const takePictureCommand = `raspistill -o "${pictureFullPath}"`;
 
     try {
-        const response = await execAsync(takePictureCommand);
-        console.log(`Taken picture: ${pictureFullPath}`);
+        const now = new Date();
+        const hour = now.getDate();
 
-        const form = new FormData();
-        form.append('file', fs.createReadStream(pictureFullPath));
+        if (hour >= 9 && hour <= 17) {
+            const response = await execAsync(takePictureCommand);
+            console.log(`Taken picture: ${pictureFullPath}`);
 
-        const options = {
-            port: 80,
-            hostname: 'api.moodyroom.space',
-            path: 'pi/picture-receiver',
-            method: 'POST',
-            headers: form.getHeaders()
-        };
+            const form = new FormData();
+            form.append('file', fs.createReadStream(pictureFullPath));
 
-        const request = http.request(options, response => {
-            console.log(`STATUS: ${response.statusCode}`);
-            console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
-        });
+            const options = {
+                port: 80,
+                hostname: 'moodyroom.space',
+                path: 'pi/picture-receiver',
+                method: 'POST',
+                headers: form.getHeaders()
+            };
 
-        request.on('error', e => {
-            console.error(`problem with request: ${e.message}`);
-        });
+            const request = http.request(options, response => {
+                console.log(`STATUS: ${response.statusCode}`);
+                console.log(`HEADERS: ${JSON.stringify(response.headers)}`);
+            });
 
-        request.on('response', async response => {
-            console.log(response.statusCode);
-            if (response.statusCode === 200) {
-                await unlinkAsync(pictureFullPath);
-                console.log(`${pictureFullPath} was deleted`);
-            }
-        });
+            request.on('error', e => {
+                console.error(`problem with request: ${e.message}`);
+            });
 
-        form.pipe(request);
+            request.on('response', async response => {
+                console.log(response.statusCode);
+                if (response.statusCode === 200) {
+                    await unlinkAsync(pictureFullPath);
+                    console.log(`${pictureFullPath} was deleted`);
+                }
+            });
+
+            form.pipe(request);
+        }
     } catch (error) {
         console.log(error);
     }
 };
 
-setInterval(main, 5000);
+setInterval(main, 30000);
