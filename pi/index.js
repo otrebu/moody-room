@@ -26,7 +26,7 @@ const main = async () => {
 
             const options = {
                 port: 80,
-                hostname: 'moodyroom.space',
+                hostname: 'api.moodyroom.space',
                 path: 'pi/picture-receiver',
                 method: 'POST',
                 headers: form.getHeaders()

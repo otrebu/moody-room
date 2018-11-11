@@ -20,7 +20,7 @@ export class Current extends React.Component {
                             }
                             return null;
                         })
-                        .filter(mood => mood !== undefined);
+                        .filter(mood => mood);
                     return (
                         <div>
                             <div className="title-container">
