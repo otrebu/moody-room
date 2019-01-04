@@ -1,11 +1,13 @@
 const Router = require('koa-router');
-const router = new Router({ prefix: '/pi' });
 const fs = require('fs');
+const lifx = require('lifx-http-api');
 const util = require('util');
 const rekognition = require('./rekognition.js');
 const { initDbClient, initDb, elaborateMoodData } = require('./dataService');
+
 const readFile = util.promisify(fs.readFile);
-var lifx = require('lifx-http-api');
+
+const router = new Router({ prefix: '/pi' });
 
 const client = new lifx({
     bearerToken: 'c00033299035cd9fb23d71440b561689301ba07792a4408a20144d0a57f21143'
@@ -34,10 +36,20 @@ const matchColorWithMood = moodName => {
             return '#86dcf9';
         case 'unknown':
             return '#664400';
+        default:
     }
 
     return '#664400';
 };
+
+router.post('/post-file', async (ctx, next) => {
+    const { file } = ctx.request.files;
+    console.log('​ctx.request', ctx.request);
+    console.log('​file', file);
+    ctx.body = `/post-file`;
+
+    return await next();
+});
 
 router.post('/picture-receiver', async (ctx, next) => {
     const { file } = ctx.request.files;
