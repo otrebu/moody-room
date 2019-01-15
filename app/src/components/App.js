@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './components/Routes';
-import { SiteHeader } from './components/shared/SiteHeader';
-import { Menu } from './components/shared/Menu';
-import { Themes } from './Contexts/Themes';
-import { AppContext } from './Contexts/AppContext';
+import Routes from './Routes';
+import { SiteHeader } from './shared/SiteHeader';
+import { Menu } from './shared/Menu';
+import { Themes } from '../Contexts/Themes';
+import { AppContext } from '../Contexts/AppContext';
+import api from '../data/api';
 
 class App extends Component {
     constructor(props) {
@@ -35,54 +36,47 @@ class App extends Component {
     }
 
     componentDidMount() {
-        let requestCurrentData = () =>
-            fetch('http://api.moodyroom.space/api/moods/current/')
-                .then(results => {
-                    if (results.status === 200) {
-                        return results.json();
-                    } else {
-                        return null;
-                    }
-                })
-                .then(data => {
-                    if (data != null) {
-                        const { moodSummary } = data;
-                        const commonMoodName = data.commonMood ? data.commonMood.name : 'unknown';
-                        const personList = data;
-
-                        this.setState({
-                            appStore: {
-                                commonMoodName,
-                                moodSummary,
-                                personList
-                            },
-                            isDataLoaded: true
-                        });
-                    }
+        const requestCurrentData = async () => {
+            const data = await api.getCurrentStatus();
+            if (data) {
+                this.setState({
+                    appStore: {
+                        ...data
+                    },
+                    isDataLoaded: true
                 });
+            }
+        };
 
         requestCurrentData();
 
         this.setState({
-            timer: setInterval(function() {
+            timer: setInterval(() => {
                 requestCurrentData();
-                console.log('get again');
             }, 15000)
         });
     }
 
-    // componentWillUnmount() {
-    //     console.log('main app timer stopped');
-    //     clearInterval(this.state.timer);
-    // }
+    componentWillUnmount() {
+        clearInterval(this.state.timer);
+    }
 
     render() {
-        const { appStore, iconClassName, navigationClassName, isDataLoaded } = this.state;
+        const {
+            appStore,
+            iconClassName,
+            navigationClassName,
+            isDataLoaded
+        } = this.state;
         const { commonMoodName } = appStore;
         return (
             <Router>
                 <AppContext.Provider value={appStore}>
-                    <div className={`App bg-${commonMoodName ? commonMoodName : 'unknown'}`}>
+                    <div
+                        className={`App bg-${
+                            commonMoodName ? commonMoodName : 'unknown'
+                        }`}
+                    >
                         <SiteHeader
                             toggleNavigation={this.toggleNavigation}
                             iconClassName={iconClassName}
@@ -93,7 +87,9 @@ class App extends Component {
                             navigationClass={navigationClassName}
                         />
 
-                        <div className="main-content">{isDataLoaded ? <Routes /> : null}</div>
+                        <div className="main-content">
+                            {isDataLoaded ? <Routes /> : null}
+                        </div>
                     </div>
                 </AppContext.Provider>
             </Router>

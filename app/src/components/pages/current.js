@@ -8,11 +8,17 @@ export class Current extends React.Component {
             <AppContext.Consumer>
                 {appStore => {
                     let { moodSummary } = appStore;
-                    const happy = moodSummary.filter(mood => mood.name === 'happy')[0];
+                    const happy = moodSummary.filter(
+                        mood => mood.name === 'happy'
+                    )[0];
                     const happyCount = happy ? happy.count : 0;
 
-                    const sad = moodSummary.filter(mood => mood.name === 'sad')[0];
+                    const sad = moodSummary.filter(
+                        mood => mood.name === 'sad'
+                    )[0];
+
                     const sadCount = sad ? sad.count : 0;
+
                     moodSummary = moodSummary
                         .map(mood => {
                             if (mood.name !== 'happy' && mood.name !== 'sad') {
@@ -28,15 +34,29 @@ export class Current extends React.Component {
                             </div>
 
                             <div className="content-container">
-                                <div>
-                                    <span className="smiley-tag">Happy: {happyCount}</span>
-                                    <span className="smiley-tag">Sad: {sadCount}</span>
-                                    {moodSummary.map(mood => (
-                                        <span key={mood.name} className="smiley-tag">
-                                            {mood.name}: {mood.count}
+                                {moodSummary.length > 0 ? (
+                                    <div>
+                                        <span className="smiley-tag">
+                                            Happy: {happyCount}
                                         </span>
-                                    ))}
-                                </div>
+                                        <span className="smiley-tag">
+                                            Sad: {sadCount}
+                                        </span>
+                                        {moodSummary.map(mood => (
+                                            <span
+                                                key={mood.name}
+                                                className="smiley-tag"
+                                            >
+                                                {mood.name}: {mood.count}
+                                            </span>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <span>
+                                        No happy people, no sad people, no
+                                        people?
+                                    </span>
+                                )}
                             </div>
                             <div>
                                 <PersonListing

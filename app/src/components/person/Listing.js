@@ -28,9 +28,14 @@ export class PersonListing extends React.Component {
         const { hideTimestamp } = this.props;
 
         const formatTime = timestamp => {
-            let d = new Date(timestamp);
-            let hr = d.getHours();
-            let min = d.getMinutes();
+            const date = new Date(timestamp);
+
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const year = date.getFullYear();
+
+            let hr = date.getHours();
+            let min = date.getMinutes();
             if (min < 10) {
                 min = '0' + min;
             }
@@ -39,21 +44,25 @@ export class PersonListing extends React.Component {
                 hr -= 12;
                 ampm = 'pm';
             }
-            return hr + ':' + min + ampm;
+            return `${day}/${month}/${year} at ${hr}:${min} ${ampm}`;
         };
 
         return (
             <div className="listing-container">
                 {personList && personList.facialAttributes ? (
                     <div className="wrapper">
-                        {personList.timestamp && !hideTimestamp ? (
+                        {!hideTimestamp && (
                             <div className="fw">
-                                <h5>Time: {formatTime(personList.timestamp)}</h5>
+                                <h5>{formatTime(personList.date)}</h5>
                             </div>
-                        ) : null}
-                        {personList.facialAttributes.map(function(person, index) {
-                            return <Emoji key={index} person={person} />;
-                        })}
+                        )}
+                        {personList.facialAttributes.length > 0
+                            ? personList.facialAttributes.map(
+                                  (person, index) => (
+                                      <Emoji key={index} person={person} />
+                                  )
+                              )
+                            : 'The room must be empty, come back later!'}
                     </div>
                 ) : null}
             </div>

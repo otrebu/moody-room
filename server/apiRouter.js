@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const { initDbClient, initDb, elaborateMoodData } = require('./dataService');
+
 const router = new Router({ prefix: '/api' });
 
 router.get('/hello', async (ctx, next) => {
@@ -41,16 +42,21 @@ router.get('/moods/last/:n', async (ctx, next) => {
         return d;
     });
 
-    let moodSummaryForNTimeFrames = [];
+    const moodSummaryForNTimeFrames = [];
 
     elaboratedMoodDataForNTimeFrames.forEach(elaboratedMoodData => {
         const { moodSummary } = elaboratedMoodData;
 
         moodSummary.forEach(mood => {
-            const moodIndex = moodSummaryForNTimeFrames.findIndex(pm => pm.name === mood.name);
+            const moodIndex = moodSummaryForNTimeFrames.findIndex(
+                pm => pm.name === mood.name
+            );
 
             if (moodIndex === -1) {
-                moodSummaryForNTimeFrames.push({ name: mood.name, count: mood.count });
+                moodSummaryForNTimeFrames.push({
+                    name: mood.name,
+                    count: mood.count
+                });
             } else {
                 moodSummaryForNTimeFrames[moodIndex].count += 1;
             }
