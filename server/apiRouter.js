@@ -26,7 +26,7 @@ router.get('/moods/current', async (ctx, next) => {
 
     dbClient.close();
 
-    ctx.body = elaborateMoodData(lastFaces);
+    ctx.body = lastFaces ? elaborateMoodData(lastFaces) : null;
 
     return await next();
 });
