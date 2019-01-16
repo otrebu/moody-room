@@ -1,5 +1,5 @@
-//const baseUrl = 'http://api.moodyroom.space';
-const baseUrl = 'http://localhost:8080';
+const baseUrl = 'http://api.moodyroom.space';
+//const baseUrl = 'http://localhost:8080';
 
 const getJson = async apiEndPoint =>
     (await fetch(`${baseUrl}${apiEndPoint}`)).json();
