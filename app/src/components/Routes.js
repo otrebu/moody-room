@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Home } from './pages/home';
 import { Current } from './pages/current';
 import { History } from './pages/history';
+import { Hackathon } from './pages/hackathon';
 import { Settings } from './pages/settings';
 
 const Routes = () => (
@@ -11,6 +12,7 @@ const Routes = () => (
         <Route exact path="/current" component={Current} />
         <Route exact path="/history/" component={History} />
         <Route exact path="/history/:count" component={History} />
+        <Route exact path="/hackathon/" component={Hackathon} />
         {/* <Route exact path="/people" component={People} /> */}
         <Route exact path="/settings" component={Settings} />
     </Switch>

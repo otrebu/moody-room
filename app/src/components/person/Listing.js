@@ -29,7 +29,8 @@ export class PersonListing extends React.Component {
 
         const formatTime = timestamp => {
             const date = new Date(timestamp);
-
+            console.log(timestamp);
+            console.log(date);
             const month = date.getMonth() + 1;
             const day = date.getDate();
             const year = date.getFullYear();
@@ -53,7 +54,7 @@ export class PersonListing extends React.Component {
                     <div className="wrapper">
                         {!hideTimestamp && (
                             <div className="fw">
-                                <h5>{formatTime(personList.date)}</h5>
+                                <h5>{formatTime(personList.timestamp)}</h5>
                             </div>
                         )}
                         {personList.facialAttributes.length > 0
@@ -62,7 +63,7 @@ export class PersonListing extends React.Component {
                                       <Emoji key={index} person={person} />
                                   )
                               )
-                            : 'The room must be empty, come back later!'}
+                            : 'Empty room...'}
                     </div>
                 ) : null}
             </div>

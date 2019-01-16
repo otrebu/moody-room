@@ -1,5 +1,10 @@
 const Router = require('koa-router');
-const { initDbClient, initDb, elaborateMoodData } = require('./dataService');
+const {
+    initDbClient,
+    initDb,
+    elaborateMoodData,
+    createMoodSummary
+} = require('./dataService');
 
 const router = new Router({ prefix: '/api' });
 
@@ -26,6 +31,27 @@ router.get('/moods/current', async (ctx, next) => {
     return await next();
 });
 
+router.get('/moods/hackathon', async (ctx, next) => {
+    const dbClient = await initDbClient();
+    const db = initDb(dbClient);
+    const hackathonFacesCollection = await db.collection('hackathonFaces');
+
+    const lastNTimeframeFaces = (await hackathonFacesCollection
+        .find()
+        .sort({ $natural: -1 })
+        .toArray()).reverse();
+
+    const elaboratedMoodDataForNTimeFrames = lastNTimeframeFaces.map(faces =>
+        elaborateMoodData(faces)
+    );
+
+    ctx.body = {
+        moodTimeFrames: elaboratedMoodDataForNTimeFrames
+    };
+
+    return await next();
+});
+
 router.get('/moods/last/:n', async (ctx, next) => {
     const dbClient = await initDbClient();
     const db = initDb(dbClient);
@@ -42,29 +68,7 @@ router.get('/moods/last/:n', async (ctx, next) => {
         return d;
     });
 
-    const moodSummaryForNTimeFrames = [];
-
-    elaboratedMoodDataForNTimeFrames.forEach(elaboratedMoodData => {
-        const { moodSummary } = elaboratedMoodData;
-
-        moodSummary.forEach(mood => {
-            const moodIndex = moodSummaryForNTimeFrames.findIndex(
-                pm => pm.name === mood.name
-            );
-
-            if (moodIndex === -1) {
-                moodSummaryForNTimeFrames.push({
-                    name: mood.name,
-                    count: mood.count
-                });
-            } else {
-                moodSummaryForNTimeFrames[moodIndex].count += 1;
-            }
-        });
-    });
-
     ctx.body = {
-        moodTimestampSummary: moodSummaryForNTimeFrames,
         moodTimeFrames: elaboratedMoodDataForNTimeFrames
     };
 

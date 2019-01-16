@@ -19,24 +19,23 @@ export class Menu extends React.Component {
                         </NavLink>
                     </h2>
                     <h2>
-                        <NavLink to="/history" activeClassName="active" onClick={toggleNavigation}>
-                            History
-                        </NavLink>
-                    </h2>
-                    {/* <h2>
                         <NavLink
-                            to="/people"
+                            to="/history"
                             activeClassName="active"
                             onClick={toggleNavigation}
                         >
-                            People
+                            History
                         </NavLink>
-                    </h2> */}
-                    {/* <h2>
-                        <NavLink to="/settings" activeClassName="active" onClick={toggleNavigation}>
-                            Settings
+                    </h2>
+                    <h2>
+                        <NavLink
+                            to="/hackathon"
+                            activeClassName="active"
+                            onClick={toggleNavigation}
+                        >
+                            Hackathon
                         </NavLink>
-                    </h2> */}
+                    </h2>
                 </div>
             </div>
         );

@@ -35,9 +35,20 @@ const getMoodsHistory = async timelapseDuration => {
     return null;
 };
 
+const getHackathon = async () => {
+    const apiEndPoint = '/api/moods/hackathon/';
+    const data = await getJson(apiEndPoint);
+
+    if (data != null) {
+        return data.moodTimeFrames;
+    }
+    return null;
+};
+
 const api = {
     getCurrentStatus,
-    getMoodsHistory
+    getMoodsHistory,
+    getHackathon
 };
 
 export default api;

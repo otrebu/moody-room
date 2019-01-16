@@ -89,5 +89,27 @@ module.exports = {
         const timestamp = ObjectId(lastFaces._id).getTimestamp();
 
         return { timestamp, commonMood, moodSummary, facialAttributes };
+    },
+    createMoodSummary: elaboratedMoodDataForNTimeFrames => {
+        const moodSummaryForNTimeFrames = [];
+
+        elaboratedMoodDataForNTimeFrames.forEach(elaboratedMoodData => {
+            const { moodSummary } = elaboratedMoodData;
+
+            moodSummary.forEach(mood => {
+                const moodIndex = moodSummaryForNTimeFrames.findIndex(
+                    pm => pm.name === mood.name
+                );
+
+                if (moodIndex === -1) {
+                    moodSummaryForNTimeFrames.push({
+                        name: mood.name,
+                        count: mood.count
+                    });
+                } else {
+                    moodSummaryForNTimeFrames[moodIndex].count += 1;
+                }
+            });
+        });
     }
 };

@@ -2,23 +2,21 @@ import React from 'react';
 import { PersonListing } from '../person/Listing';
 import api from '../../data/api';
 
-export class History extends React.Component {
+export class Hackathon extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             hiddenClass: 'hidden',
             personList: [],
-            timer: null,
-            timelapseDuration: 50
+            timer: null
         };
     }
 
     async componentDidMount() {
         let currentPersonListIndex = 0;
-        const timelapseDuration = this.props.match.params.count || 250;
 
-        const personDataList = await api.getMoodsHistory();
+        const personDataList = await api.getHackathon();
 
         const updatePersonList = listIndex => {
             if (currentPersonListIndex < personDataList.length) {
@@ -34,13 +32,10 @@ export class History extends React.Component {
         updatePersonList(currentPersonListIndex);
 
         this.setState({
-            timer: setInterval(
-                () => {
-                    currentPersonListIndex++;
-                    updatePersonList(currentPersonListIndex);
-                },
-                timelapseDuration > 50 ? 500 : 1000
-            )
+            timer: setInterval(() => {
+                currentPersonListIndex++;
+                updatePersonList(currentPersonListIndex);
+            }, 500)
         });
     }
 
@@ -53,7 +48,7 @@ export class History extends React.Component {
 
         return (
             <div>
-                <h2>History</h2>
+                <h2>Hackathon moods</h2>
 
                 <div className={`content-container ${hiddenClass}`}>
                     {personList ? (
