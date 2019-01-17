@@ -31,13 +31,12 @@ const main = async () => {
         form.submit(
             'http://api.moodyroom.space/pi/picture-receiver',
             async (error, response) => {
-                console.log(response.statusCode);
-                if (response.statusCode === 200) {
-                    await unlinkAsync(pictureFullPath);
-                    console.log(
-                        'The last picture has been deleted. Hopefully.'.green
-                    );
-                }
+                console.log(response.body);
+                await unlinkAsync(pictureFullPath);
+                console.log(
+                    'The last picture has been deleted. Hopefully.'.green
+                );
+
                 response.resume();
             }
         );
