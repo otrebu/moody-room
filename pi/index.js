@@ -55,7 +55,7 @@ const main = async () => {
                 console.log(
                     'The last picture has been deleted. Hopefully.'.green
                 );
-
+                console.log('...'.green);
                 response.resume();
             }
         );
@@ -63,8 +63,7 @@ const main = async () => {
         console.log(`A damn error: ${error}`.red);
     }
 
-    console.log('...');
-    console.log('...');
+    console.log('...'.green);
 };
 
 main();
