@@ -33,7 +33,7 @@ const main = async () => {
     const pictureName = `${Date.now()}.jpg`;
     const pictureFolderPath = '/home/pi/Pictures';
     const pictureFullPath = `${pictureFolderPath}/${pictureName}`;
-    const takePictureCommand = `raspistill -o "${pictureFullPath}"`;
+    const takePictureCommand = `raspistill -n -o "${pictureFullPath}"`;
 
     try {
         console.log('About to take a picture. Act normally if you can.'.green);
