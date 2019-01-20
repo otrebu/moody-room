@@ -15,6 +15,20 @@ console.log(
     })
 );
 
+const randomPhrase = () => {
+    const phrases = [
+        'You look great!',
+        'You look miserable, I feel sorry for you.',
+        'I wish I could do something to help you...',
+        'I am sure you will be happy one day!',
+        'Wow! Just wow!',
+        'Happy crowd!',
+        'Mh...'
+    ];
+    const randomIndex = Math.floor(Math.random() * phrases.length);
+    return phrases[randomIndex];
+};
+
 const main = async () => {
     const pictureName = `${Date.now()}.jpg`;
     const pictureFolderPath = '/home/pi/Pictures';
@@ -22,11 +36,13 @@ const main = async () => {
     const takePictureCommand = `raspistill -o "${pictureFullPath}"`;
 
     try {
-        console.log('About to take a picture. Act normally. If you can'.green);
+        console.log('About to take a picture. Act normally if you can.'.green);
 
         await execAsync(takePictureCommand);
 
-        console.log('Picture taken, too late to smile now'.green);
+        console.log(
+            `Picture taken, too late to smile now. ${randomPhrase()}`.green
+        );
 
         const form = new FormData();
 
@@ -46,6 +62,9 @@ const main = async () => {
     } catch (error) {
         console.log(`A damn error: ${error}`.red);
     }
+
+    console.log('...');
+    console.log('...');
 };
 
 main();
