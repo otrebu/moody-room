@@ -10,7 +10,7 @@ const execAsync = util.promisify(exec);
 const unlinkAsync = util.promisify(fs.unlink);
 
 console.log(
-    boxen('Starting to analyse the mood in this room...'.rainbow, {
+    boxen('Starting to analyse the mood in this room...'.green, {
         padding: 1
     })
 );
@@ -22,13 +22,11 @@ const main = async () => {
     const takePictureCommand = `raspistill -o "${pictureFullPath}"`;
 
     try {
-        console.log(
-            'About to take a picture. Act normally. If you can'.rainbow
-        );
+        console.log('About to take a picture. Act normally. If you can'.green);
 
         await execAsync(takePictureCommand);
 
-        console.log('Picture taken, too late to smile now'.rainbow);
+        console.log('Picture taken, too late to smile now'.green);
 
         const form = new FormData();
 
@@ -39,9 +37,9 @@ const main = async () => {
             async (error, response) => {
                 await unlinkAsync(pictureFullPath);
                 console.log(
-                    'The last picture has been deleted. Hopefully.'.rainbow
+                    'The last picture has been deleted. Hopefully.'.green
                 );
-                console.clear();
+
                 response.resume();
             }
         );
